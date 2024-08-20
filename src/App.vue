@@ -3,12 +3,13 @@ import GuaForm from "./components/Form.vue";
 </script>
 
 <template>
-  <div class="gua-wapper">
+  <!-- <div class="gua-wapper">
     <div class="gua">
       <img src="../src/assets/1-avatar.jpeg" width="180" height="180" class="logo" />
       <gua-form></gua-form>
     </div>
-  </div>
+  </div> -->
+  <router-view/>
 </template>
 
 <style scoped>

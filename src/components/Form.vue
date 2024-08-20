@@ -14,8 +14,9 @@
     >
     <el-tag type="success">{{ result.t }}爻动</el-tag>
   </el-row>
-
-  <el-form ref="ruleFormRef" :model="ruleForm" :rules="rules" label-width="20px" class="demo-ruleForm" :size="formSize">
+  <el-form ref="ruleFormRef" 
+  :model="ruleForm" :rules="rules" label-width="20px" 
+  class="demo-ruleForm" :size="formSize">
     <el-form-item label="上" prop="top">
       <el-input v-model="ruleForm.top" />
     </el-form-item>

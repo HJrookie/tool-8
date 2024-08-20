@@ -73,7 +73,7 @@ export const guaMap = {
 }
 
 // 卦变化map
-export const guaChangeMap = {
+export const guaChangeMap: Record<string, number> = {
     '1-1': 5,
     '1-2': 3,
     '1-3': 2,
