@@ -11,9 +11,6 @@
 </template>
 
 <script setup lang="ts">
-import Lodash from 'lodash';
-import ShowResult from '@views/ShowResult/index.vue';
-import InputForm from '@views/InputForm/index.vue';
 import Avatar from '@assets/images/avatar.jpeg';
 </script>
 

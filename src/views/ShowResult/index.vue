@@ -14,7 +14,7 @@
         >
           {{ Reference.guaMap[`${item.m}-${item.b}`] }}卦
         </el-tag> -->
-        <div class="gua-box">
+        <div class="gua-box" @click="openLink(Reference.guaMap[`${item.m}-${item.b}`])">
           <div class="gua">{{ Reference.guaMap[`${item.m}-${item.b}`] }}</div>
           <div class="gua-suffix">卦</div>
         </div>
@@ -25,8 +25,6 @@
 </template>
 
 <script setup lang="ts">
-import { reactive, ref, onUnmounted } from 'vue';
-import Lodash from 'lodash';
 import EventBus from '@utils/eventBus'
 
 import { openLink } from './index';

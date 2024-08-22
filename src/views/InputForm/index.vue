@@ -32,7 +32,6 @@
 </template>
 
 <script setup lang="ts">
-import { reactive, ref } from 'vue';
 import Lodash from 'lodash';
 import EventBus from '@utils/eventBus'
 

@@ -4,7 +4,7 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
     name: 'Main',
-    component: () => import(/* webpackChunkName: "MainWindow" */'@/views/MainWindow.vue')
+    component: () => import(/* webpackChunkName: "MainWindow" */ '@/views/MainWindow.vue')
   }
 ];
 

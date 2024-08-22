@@ -4,6 +4,7 @@ import vue from '@vitejs/plugin-vue';
 import AutoImport from 'unplugin-auto-import/vite';
 import Components from 'unplugin-vue-components/vite';
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers';
+import { VueUseComponentsResolver } from 'unplugin-vue-components/resolvers';
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -24,10 +25,27 @@ export default defineConfig({
   },
   plugins: [vue(),
     AutoImport({
-      resolvers: [ElementPlusResolver()],
+      imports: [
+        'vue', // 自动导入 vue 相关的 API
+        'vue-router', // 自动导入 vue-router 相关的 API
+        '@vueuse/core', // 如果使用 VueUse
+      ],
+      dts: 'src/auto-imports.d.ts', // 生成全局声明文件
     }),
     Components({
-      resolvers: [ElementPlusResolver()],
-    }),],
+      resolvers: [
+        // 自动导入 VueUse 组件
+        VueUseComponentsResolver(),
+      ],
+      dirs: ['src/components', 'src/views'],
+      dts: 'src/components.d.ts', // 生成组件声明文件
+    }),
+    // AutoImport({
+    //   resolvers: [ElementPlusResolver()],
+    // }),
+    // Components({
+    //   resolvers: [ElementPlusResolver()],
+    // }),
+  ],
   
 })
