@@ -1,4 +1,4 @@
-export const guaMap = {
+export const guaMap: Record<string, string> = {
     '1-1': '乾',
     '1-2': '履',
     '1-3': '同人',
@@ -108,7 +108,7 @@ export const guaChangeMap: Record<string, number> = {
 }
 
 
-export const mingtainjiHrefMap = {
+export const mingtainjiHrefMap: Record<string, string> = {
     "乾": "https://www.mingtianji.com/2021/03/13/512/",
     "坤": "https://www.mingtianji.com/2021/03/13/507/",
     "屯": "https://www.mingtianji.com/2021/03/13/503/",
@@ -174,3 +174,5 @@ export const mingtainjiHrefMap = {
     "既济": "https://www.mingtianji.com/2021/03/08/75/",
     "未济": "https://www.mingtianji.com/2021/03/08/64/"
 }
+
+export const xiantianGuaMap = ["", "乾", "兑", "离", "震", "巽", "坎", "艮", "坤"];
