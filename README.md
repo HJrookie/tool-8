@@ -1,7 +1,158 @@
-# Vue 3 + Vite
+# 易经卜卦工具
 
-This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+一个轻量的前端卜卦小工具，基于「数字起卦法」实现：从下往上依次输入 3 个三位数字，自动推算出**本卦**、**变卦**以及**动爻**，并附带跳转至卦象详解的链接。
 
-## Recommended IDE Setup
+> 原项目名 `tool`，本仓库为基于 Vue 3 + Element Plus 的纯前端实现，无后端依赖。
 
-- [VS Code](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+---
+
+## ✨ 功能特性
+
+- 🔢 **数字起卦**：从下往上依次输入 3 个三位数字，自动完成取模换算
+- ☯️ **本卦 + 变卦**：同时展示本卦、变卦及其对应的先天八卦（上、下卦）组合
+- 📍 **动爻标注**：用标签高亮显示动爻位置（第几爻发动）
+- 🔗 **卦象详解**：点击卦名即可跳转至「明天机」网站的对应卦象解读页面
+- 🎨 **Element Plus UI**：自动按需引入组件与图标，界面简洁统一
+- ⚡ **Vite 极速开发**：热更新、开箱即用的现代构建体验
+
+---
+
+## 🧰 技术栈
+
+| 分类 | 选型 |
+| --- | --- |
+| 框架 | Vue 3（`script setup` 语法） |
+| 构建工具 | Vite 4 |
+| UI 组件库 | Element Plus 2.3 + `@element-plus/icons-vue` |
+| 自动导入 | `unplugin-auto-import` + `unplugin-vue-components`（Element Plus 自动按需引入） |
+| 包管理器 | pnpm（含 `pnpm-lock.yaml`） |
+
+---
+
+## 📁 目录结构
+
+```
+tool-8/
+├── index.html              # 入口 HTML
+├── package.json            # 依赖与脚本
+├── vite.config.js          # Vite 配置（含 Element Plus 自动导入与端口设置）
+├── public/
+│   └── vite.svg            # 站点图标
+└── src/
+    ├── main.js             # 应用入口，挂载 Element Plus 与全部图标
+    ├── App.vue             # 根组件，承载头像与表单
+    ├── style.css           # 全局样式
+    ├── components/
+    │   └── Form.vue        # 核心卜卦表单与推算逻辑
+    ├── utils/
+    │   └── index.js        # 卦象数据：64 卦映射、变卦映射、详解链接
+    └── assets/
+        ├── 1-avatar.jpeg   # 头像
+        └── vue.svg
+```
+
+---
+
+## 🚀 快速开始
+
+### 环境要求
+
+- Node.js 16+
+- pnpm（推荐）或 npm
+
+### 安装依赖
+
+```bash
+pnpm install
+# 若使用 npm：npm install
+```
+
+### 本地开发
+
+```bash
+pnpm dev
+```
+
+启动后默认访问 `http://localhost:5177`（端口在 `vite.config.js` 中通过 `server.port` 设置为 `5177`，并监听 `0.0.0.0` 方便局域网访问）。
+
+### 构建生产包
+
+```bash
+pnpm build
+```
+
+构建产物默认输出到 `dist/`。
+
+### 预览生产包
+
+```bash
+pnpm preview
+```
+
+---
+
+## 📖 使用说明
+
+本工具用于起《易经》卦象，采用「数字起卦法」。请按以下步骤操作：
+
+1. **从下往上**依次在表单中填入 **3 个三位数字**（输入框顺序为：**下 → 中 → 上**）：
+   - **下**（对应代码中的 `bottom`）：用于推算**下卦**
+   - **中**（对应代码中的 `mid`）：用于推算**上卦**
+   - **上**（对应代码中的 `top`）：用于推算**动爻**
+2. 点击 **Click** 按钮，即可得到本卦、变卦与动爻结果。
+3. 点击结果中的**卦名标签**，将在新标签页打开该卦的详解页面。
+4. 点击 **Reset** 可重置表单。
+
+> 💡 算法会对输入数字取模：下卦 / 上卦取 `% 8`，动爻取 `% 6`（余数为 0 时分别记为 8 / 6）。虽取模支持任意正整数，但本工具约定以 **三位数字** 起卦。
+
+---
+
+## 🧮 起卦算法原理
+
+本工具采用经典的**数字起卦法**，核心换算如下：
+
+| 项目 | 计算方式 | 说明 |
+| --- | --- | --- |
+| 上卦 | `中数 % 8`（余数为 0 时记为 8） | 取值 1~8，对应先天八卦 |
+| 下卦 | `下数 % 8`（余数为 0 时记为 8） | 取值 1~8，对应先天八卦 |
+| 动爻 | `上数 % 6`（余数为 0 时记为 6） | 取值 1~6，对应六爻中的第几爻发动 |
+
+**先天八卦顺序（数值 1~8 对应）：**
+`乾(1) 兑(2) 离(3) 震(4) 巽(5) 坎(6) 艮(7) 坤(8)`
+
+**本卦**：由「上卦-下卦」组合，在 `guaMap` 中查得卦名。
+
+**变卦**：
+- 若动爻 `> 3`（即第 4 / 5 / 6 爻发动，位于上卦部分）→ **上卦**发生变化；
+- 若动爻 `≤ 3`（即第 1 / 2 / 3 爻发动，位于下卦部分）→ **下卦**发生变化。
+
+变化后的新卦象编码通过 `guaChangeMap` 得到，再映射回 `guaMap` 取得变卦名称。
+
+### 数据结构（`src/utils/index.js`）
+
+- `guaMap`：64 卦映射，键为 `"上卦-下卦"`（如 `"1-1"` → 乾），值为卦名。
+- `guaChangeMap`：变卦映射，键为 `"原卦编码-动爻"`，值为变化后的新卦象编码。
+- `mingtainjiHrefMap`：卦名 → 「明天机」网站卦象详解页 URL 的映射，用于点击跳转。
+
+---
+
+## ⚙️ 配置说明
+
+- **端口 / 监听地址**：在 `vite.config.js` 的 `server` 中配置，当前为 `port: 5177`、监听 `0.0.0.0`。
+- **Element Plus 自动导入**：通过 `unplugin-auto-import` 与 `unplugin-vue-components` 的 `ElementPlusResolver` 实现组件与 API 的按需自动引入，无需手动 `import`。
+
+---
+
+## 📝 待完善 / 可扩展
+
+- 增加**互联网起卦**（如按时间、按声音/物数起卦）等多种起卦方式
+- 在页面内直接展示卦辞、爻辞，减少外链跳转
+- 补充**互卦 / 错卦 / 综卦**等更完整的分析维度
+- 增加单元测试，校验 64 卦映射与变卦逻辑的正确性
+- 移除遗留的 `console.log` 调试输出
+
+---
+
+## 📄 License
+
+私有项目，仅供学习与交流使用。
